@@ -2,12 +2,13 @@
 % Please edit documentation in R/nConst_MC.R
 \name{nConst_MC}
 \alias{nConst_MC}
-\title{Density of a Lognormal-GPD dynamic mixture}
+\title{Monte carlo approximation of the normalizing constant of a Lognormal-GPD dynamic mixture}
 \usage{
-nConst_MC(x, nreps, xiInst = 3, betaInst = 3)
+nConst_MC(x, nreps, xiInst = 3, betaInst = 3, weight)
 }
 \arguments{
-\item{x}{(6 by 1) numerical vector: values of the parameters CA1, CA2, meanlog, sdlog, xi, beta.}
+\item{x}{if weight is equal to 'cau', (6 by 1) numerical vector: values of \eqn{\mu_c}, \eqn{\tau}, \eqn{\mu}, \eqn{\sigma}, \eqn{\xi}, \eqn{\beta};
+if weight is equal to 'exp', (5 by 1) numerical vector: values of \eqn{\lambda}, \eqn{\mu}, \eqn{\sigma}, \eqn{\xi}, \eqn{\beta}.}
 
 \item{nreps}{number of replications to be used in the computation of the integral in the normalizing
 constant.}
@@ -15,15 +16,18 @@ constant.}
 \item{xiInst}{real: value of the shape parameter of the instrumental density. Default value equal to 3.}
 
 \item{betaInst}{non-negative real: value of the scale parameter of the instrumental density. Default value equal to 3.}
+
+\item{weight}{'cau' or 'exp': name of weight distribution.}
 }
 \value{
 Normalizing constant of the density of the lognormal-GPD mixture.
 }
 \description{
-This function evaluates the normalizing constant of a Lognormal-GPD dynamic mixture via Monte Carlo simulation.
+This function evaluates via Monte Carlo simulation the normalizing constant of a Lognormal-GPD dynamic mixture,
+with Cauchy or exponential weight.
 }
 \examples{
-nconst <- nConst_MC(c(1,2,0,0.5,0.25,3.5), 10000)
+nconst <- nConst_MC(c(1,2,0,0.5,0.25,3.5), 10000, 3, 3, 'cau')
 }
 \keyword{dynamic}
 \keyword{mixture.}

@@ -2,9 +2,9 @@
 % Please edit documentation in R/MLEBoot.R
 \name{MLEBoot}
 \alias{MLEBoot}
-\title{Creating bootstrap samples from observed data and computing MLEs}
+\title{Bootstrap standard errors of MLEs}
 \usage{
-MLEBoot(x, y, intTol)
+MLEBoot(x, y, intTol, weight)
 }
 \arguments{
 \item{x}{list of integers: indices of replications.}
@@ -13,6 +13,8 @@ MLEBoot(x, y, intTol)
 
 \item{intTol}{threshold for stopping the computation of the integral in the normalization
 constant: if the integral on the interval from n-1 to n is smaller than intTol, the approximation procedure stops.}
+
+\item{weight}{'cau' or 'exp': name of weight distribution.}
 }
 \value{
 A list with the following elements:
@@ -23,7 +25,7 @@ errors: number of times the MLE algorithm breaks down.
 }
 \description{
 This function creates bootstrap samples of input data and fits a dynamic mixture via
-standard maximum likelihood.
+maximum likelihood.
 }
 \details{
 MLEs are computed by means of the optim function. When it breaks
@@ -31,7 +33,7 @@ down, the sample is discarded and a new one is generated. The function keeps
 track of the number of times this happens.
 }
 \examples{
-bootMLEs <- MLEBoot(1,Metro2019,1e-02)
+\donttest{bootMLEs <- MLEBoot(1,Metro2019,1e-04,'exp')}
 }
 \keyword{MLE;}
 \keyword{bootstrap.}
