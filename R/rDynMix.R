@@ -1,16 +1,15 @@
 #' Simulating a dynamic lognormal-Pareto mixture
 #'
-#' This function fits a dynamic mixture by Approximate Maximum Likelihood and by standard maximum likelihood.
+#' This function simulates a dynamic mixture.
 #' Currently only implemented for the lognormal - generalized Pareto case,
 #' with Cauchy or exponential weight.
 #' @param nreps integer: number of observations sampled from the mixture.
-#' @param x numerical vector: if weight = 'cau', values of \eqn{mu_c}, \eqn{\tau}, \eqn{\mu}, 
+#' @param x numerical vector: if weight = 'cau', values of \ifelse{html}{\out{&mu;<sub>c</sub>}}{\eqn{mu_c}}, \eqn{\tau}, \eqn{\mu}, 
 #' \eqn{\sigma}, \eqn{\xi}, \eqn{\beta}; if weight = 'exp', values of \eqn{\lambda}, \eqn{\mu}, \eqn{\sigma}, \eqn{\xi}, \eqn{\beta}.
 #' @param weight 'cau' or 'exp': name of weight distribution.
 #' @return ysim (nreps x 1) vector: nreps random numbers from the lognormal-GPD dynamic mixture.
 #' @details This function simulates a dynamic lognormal-GPD mixture using
 #' the algorithm of Frigessi et al. (2002, p. 221).
-#' @keywords dynamic mixture; simulation.
 #' @export
 #' @examples
 #' ysim <- rDynMix(100,c(1,2,0,0.5,0.25,3),'cau')

@@ -15,7 +15,6 @@
 #' @details MLEs are computed by means of the optim function. When it breaks
 #' down, the sample is discarded and a new one is generated. The function keeps
 #' track of the number of times this happens.
-#' @keywords dynamic mixture; MLE; non-parametric bootstrap.
 #' @export
 #' @examples
 #' \donttest{bootMLEs <- MLEBoot(1,Metro2019,1e-04,'exp')}
@@ -42,12 +41,10 @@ MLEBoot = function(x,y,intTol,weight)
       #      print(intTol)
       x0Lik = as.numeric(c(muc0,tau0,mu0,sigma0,xi0,beta0))
       MLE <- tryCatch({
-        res <- optim(x0Lik,dynloglik, gr=NULL,yboot,intTol,'cau',method='L-BFGS-B',lower=c(-Inf,.01,-Inf,.05,10^-10,.1),upper=c(Inf,Inf,Inf,10,Inf,100),control=list(fnscale=-1))
+      res <- optim(x0Lik,dynloglik, gr=NULL,yboot,intTol,'cau',method='L-BFGS-B',lower=c(-Inf,.01,-Inf,.05,10^-10,.1),upper=c(Inf,Inf,Inf,10,Inf,Inf),control=list(fnscale=-1))
       MLE <- res$par # muc, tau, mu, sigma, xi, beta
       },
       error = function(e) {'errore'}) -> condizione
-      # if(class(condizione) != "character") i = i + 1
-      # if(class(condizione) == "character") j = j + 1
       if(inherits(condizione,"character",which=TRUE)==0) i = i + 1
       if(inherits(condizione,"character",which=TRUE)==1) j = j + 1
     }
@@ -75,8 +72,6 @@ if (weight == 'exp')
     MLE <- res$par # lambda, mu, sigma, xi, beta
   },
   error = function(e) {'errore'}) -> condizione
-  # if(class(condizione) != "character") i = i + 1
-  # if(class(condizione) == "character") j = j + 1
   if(inherits(condizione,"character",which=TRUE)==0) i = i + 1
   if(inherits(condizione,"character",which=TRUE)==1) j = j + 1
   }

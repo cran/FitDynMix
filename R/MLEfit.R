@@ -18,18 +18,17 @@
 #'
 #' sdMLE vector: bootstrap standard deviation of the MLEs.
 #' 
-#' @details Starting values for mu and sigma are the lognormal MLEs computed
-#' with the observations below the median. Initial values for xi and
-#' tau are the GPD MLEs obtained with the observations above the median.
+#' @details Starting values for \eqn{\mu} and \eqn{\sigma} are the lognormal MLEs computed
+#' with the observations below the median. Initial values for \eqn{\xi} and
+#' \eqn{\tau} are the GPD MLEs obtained with the observations above the median.
 #' For the location and scale parameter of the Cauchy, we respectively use
 #' the first quartile and abs(log(sd(x)/2)). For the parameter of the exponential, we use
 #' abs(log(sd(x)/2)).
-#' @keywords dynamic mixture; maximum likelihood.
 #' @seealso [AMLEfit]
 #' @export
 #' @examples
 #' \donttest{
-#' mixFit <- MLEfit(Metro2019,0,,'cau')}
+#' mixFit <- MLEfit(Metro2019,0,1e-04,'cau')}
 #' @references{
 #'   \insertRef{bee22b}{FitDynMix}
 #' }
@@ -55,7 +54,7 @@ MLEfit <- function(yObs,bootreps,intTol=1e-4,weight)
       tau0 = abs(log(sd(yObs)/2))
       x0Lik = as.numeric(c(muc0,tau0,mu0,sigma0,xi0,beta0))
       res <- optim(x0Lik,dynloglik, gr=NULL,yObs,intTol,'cau',method='L-BFGS-B',
-                   lower=c(-Inf,.01,-Inf,.01,.01,.01),upper=c(Inf,Inf,Inf,10,Inf,50),control=list(fnscale=-1))
+                   lower=c(-Inf,.01,-Inf,.01,.01,.01),upper=c(Inf,Inf,Inf,Inf,Inf,Inf),control=list(fnscale=-1))
       estMLE <- c(res$par,res$value) # muc, tau, mu, sigma, xi, beta
       nreps.list <- sapply(1:bootreps, list)
       chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
